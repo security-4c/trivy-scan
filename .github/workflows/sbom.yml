@@ -1,7 +1,8 @@
 name: sbom
 on:
   push:
-  - main
+    branches:
+    - main
   
 permissions:
   contents: write
