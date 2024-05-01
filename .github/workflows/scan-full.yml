@@ -9,28 +9,28 @@ permissions:
   contents: read
 
 jobs:
-  scan:
+  build:
     permissions:
       content: read
       security-events: write
       actions: read
-  name: scanfix
+  name: Build
   runs-on: "ubuntu-20.04"
   steps:
-    - name: Checkout Code
-      uses: actions/checkout@v3
+  - name: Checkout Code
+    uses: actions/checkout@v3
 
-    - name: Run Trivy vulnerability scanner
-      uses: acuasecurity/trivy-action@b7aa264d83dc58691451798b4d117d53d21edfe
-      with:
-        scan-type: 'fs'
-        scan-ref: '.'
-        template: '@/contrib/sarif.tpl'
-        output: 'trivy-results.sarif'
-        severity: 'CRITICAL,HIGH'
+  - name: Run Trivy vulnerability scanner
+    uses: acuasecurity/trivy-action@b7aa264d83dc58691451798b4d117d53d21edfe
+    with:
+      scan-type: 'fs'
+      scan-ref: '.'
+      template: '@/contrib/sarif.tpl'
+      output: 'trivy-results.sarif'
+      severity: 'CRITICAL,HIGH'
       
-    - name: Upload Trivy scan results to GitHub Security tab
-      uses: github/codeql-action/upload-sarif@v2
-      with:
-        sarif_files: 'trivy-results.sarif'
+  - name: Upload Trivy scan results to GitHub Security tab
+    uses: github/codeql-action/upload-sarif@v2
+    with:
+      sarif_files: 'trivy-results.sarif'
             
